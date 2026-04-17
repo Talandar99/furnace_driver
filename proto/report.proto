@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package telemetry;
+
+option go_package = "example.com/myapp/proto;telemetrypb";
+
+message Version {
+  uint32 value = 1; // spakowane: major | minor | patch
+}
+
+message DataPoint {
+  string time = 1; // uint64 i jako milisekundy
+  float temp = 2;  // też
+  optional double humi = 3;
+  bool enable = 4;
+}
+
+message SensorReport {
+  uint32 id = 1;
+  Version ver = 2;
+  repeated DataPoint data = 3;
+  Status status = 4;
+  string logs = 5;
+}
+
+enum Status {
+  STATUS_OK = 0;
+  STATUS_WARNING = 1;
+  STATUS_UNKNOWN = 2;
+  STATUS_ERROR = 3;
+}
